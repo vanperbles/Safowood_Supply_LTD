@@ -1,0 +1,149 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>{% block head_title %}{% endblock %}</title>
+  {% block extra_head %}
+  {% endblock %}
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link href="{% static 'myAuth/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'myAuth/css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'myAuth/css/bootstrap-reboot.css' %}" rel="stylesheet">
+  <link href="{% static 'Product/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'Product/css/mdb.min.css' %}" rel="stylesheet">
+  <link href="{% static 'Product/css/style.min.css' %}" rel="stylesheet">
+
+  <style type="text/css">
+  </style>
+</head>
+<body>
+    <!--NavBar-->
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #ffff;">
+      <div class="container">
+      <a class="navbar-brand" href="/">SAFOWOOD LTD</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right ">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link dark-grey-text font-weight-bold" id="nav-my-color" href="#">Categories <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item ml-3">
+                <a class="nav-link dark-grey-text font-weight-bold" href="#">Contact us</a>
+            </li>
+            <li class="nav-item ml-3">
+                <a class="nav-link dark-grey-text font-weight-bold" href="#">Welcome: {{user.email}}</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link waves-effect">
+                    <span class="badge red z-depth-1 mr-1">{{ 1 }}</span>
+                    <i class="fas fa-shopping-cart blue-text"></i>
+                    <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+                </a>
+            </li>
+             {% if request.user.is_superuser %}
+            <li class="nav-item dropdown ml-3">
+                <a class="nav-link dropdown-toggle dark-grey-text font-weight-bold" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"><i class="fas fa-user blue-text"></i> Profile </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
+                    <a class="dropdown-item waves-effect waves-light" href="#">My account</a>
+                    <a class="dropdown-item waves-effect waves-light" href="#">Log out</a>
+                </div>
+            </li>
+            {% else %}
+              <li class="nav-item dropdown ml-3">
+                <a class="nav-link dropdown-toggle dark-grey-text font-weight-bold" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"><i class="fas fa-user blue-text"></i> Profile </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
+                    <a class="dropdown-item waves-effect waves-light" href="{%url 'dashboard:dashboard'%}">Dashboard</a>
+                    <a class="dropdown-item waves-effect waves-light" href="#">My account</a>
+                    <a class="dropdown-item waves-effect waves-light" href="#">Log out</a>
+                </div>
+            </li>
+             {% endif %}
+          {% else %}
+            <li class="nav-item">
+                <a class="nav-link waves-effect" href="{%url 'myAuth:register'%}">
+                    <span class="clearfix d-none d-sm-inline-block"> Signup </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link waves-effect" href="{%url 'myAuth:login'%}">
+                    <span class="clearfix d-none d-sm-inline-block"> Login </span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+      </div>
+    </div>
+    </nav>
+<!--# Checking how messages are handeled-->
+        <div class="container mt-1 pt-1">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} Whalert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+         {%block content%}
+        {%endblock content%}
+<!--  JavaScript-->
+<!--  JQuery-->
+  <script type="text/javascript" src="{% static 'myAuth/js/jquery.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'myAuth/js/bootstrap.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'myAuth/js/bootstrap.js'%}"></script>
+    <!-- SCRIPTS -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="{% static 'Product/js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{% static 'Product/js/popper.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{% static 'Product/js/bootstrap.min.js' %}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'Product/js/mdb.min.js' %}"></script>
+
+<script type="text/javascript">
+    /* WOW.js init */
+    new WOW().init();
+
+    // SideNav Button Initialization
+    $(".button-collapse").sideNav();
+    // SideNav Scrollbar Initialization
+    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+    Ps.initialize(sideNavScrollbar);
+
+    // Tooltips Initialization
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
+  </script>
+  <script>
+    // Material Select Initialization
+    $(document).ready(function () {
+      $('.mdb-select').material_select();
+    });
+
+  </script>
+
+</body>
